@@ -1,0 +1,40 @@
+=== TEST 1: cold read miss then read hit ===
+[375000] RESP id=0 data=0x00000140
+[415000] RESP id=1 data=0x00000140
+
+=== TEST 2: write hit and byte enables ===
+[455000] RESP id=2 data=0x00000000
+[495000] RESP id=3 data=0xaabbccdd
+[535000] RESP id=4 data=0x00000000
+[575000] RESP id=5 data=0xaabb3344
+
+=== TEST 3: dirty eviction/writeback + LRU ===
+[915000] RESP id=6 data=0x00000200
+[1255000] RESP id=7 data=0x00001200
+[1295000] RESP id=8 data=0x00000000
+[1335000] RESP id=9 data=0x00001200
+[1865000] RESP id=10 data=0x00002200
+
+=== TEST 4: hit-under-miss ===
+[2205000] RESP id=11 data=0x00000440
+[2265000] RESP id=13 data=0x00000440
+[2545000] RESP id=12 data=0x00003480
+Hit-under-miss confirmed: hit cycle=223, miss cycle=251
+
+=== TEST 5: two MSHRs + third-miss backpressure ===
+[2885000] RESP id=0 data=0x00005000
+[3055000] RESP id=1 data=0x00005040
+[3225000] RESP id=2 data=0x00005080
+Third miss stalled for 28 cycle(s) as expected.
+
+=== PERFORMANCE COUNTERS ===
+accesses             = 17
+hits                 = 8
+misses               = 9
+writebacks           = 1
+MSHR stall cycles    = 28
+set-conflict stalls  = 0
+
+============================================
+ALL DIRECTED TESTS PASSED
+============================================
